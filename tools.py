@@ -1,4 +1,5 @@
 import boto3
+import urllib
 import logging
 import fcsparser
 import os.path
@@ -6,11 +7,13 @@ import os.path
 logger = logging.getLogger('boto3')
 logger.setLevel(logging.INFO)
 
+#columns that have %20 or other urlencoded characters
+urldecoded = ['qqfilename','timestamp','expmoniker','tubetype','species']
 
 def get_full_record(bucket, key):
     s3 = boto3.resource('s3')
     s3_object = s3.Object(bucket, key)
-    
+
     #if not os.path.isfile('/tmp/'+key):
     s3.Bucket(bucket).download_file(key, '/tmp/'+key)
     
@@ -35,6 +38,10 @@ def get_full_record(bucket, key):
 def get_s3_metadata(bucket, key):
     s3 = boto3.resource('s3')
     s3_object = s3.Object(bucket, key)
+
+    for k in urldecoded:
+        if k in s3_object.metadata:
+            s3_object.metadata[k] = urllib.parse.unquote(s3_object.metadata[k])
     return(s3_object.metadata)
     #print(s3_object.metadata)
     #return({'s3_metadata':s3_object.metadata})

@@ -6,6 +6,7 @@ import requests
 import time
 import click
 import os
+import sys
 from tools import get_full_record, get_s3_metadata
 import pandas
 
@@ -40,12 +41,19 @@ def list(file,full,bucket,s3_metadata,format):
     if format=='json':
         if full or s3_metadata == True:
             print(json.dumps(records))
-    elif format=='csv':
-        pjson=pandas.read_json(json.dumps(records))
-        print(pjson.T.to_csv(sep=','))
-    elif format=='tsv':
-        pjson=pandas.read_json(json.dumps(records))
-        print(pjson.T.to_csv(sep='\t'))
+    else:
+        if format=='csv':
+            sep=','
+        elif format=='tsv':
+            sep='\t'
+        else:
+            sys.exit('unknown format')
+        pjson=pandas.read_json(json.dumps(records)).T
+        pjson.rename(columns={'':'file'}, inplace=True)
+        #print(pjson.columns)
+        
+        print(pjson.to_csv(sep=sep))
+
 
 @cli.command()
 @click.option('--file', default = None, help='a specific file')
