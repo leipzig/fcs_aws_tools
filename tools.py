@@ -3,6 +3,7 @@ import urllib
 import logging
 import fcsparser
 import os.path
+from os.path import splitext
 
 logger = logging.getLogger('boto3')
 logger.setLevel(logging.INFO)
@@ -45,3 +46,9 @@ def get_s3_metadata(bucket, key):
     return(s3_object.metadata)
     #print(s3_object.metadata)
     #return({'s3_metadata':s3_object.metadata})
+    
+
+def splitext_(path):
+    if len(path.split('.')) > 2:
+        return path.split('.')[0],'.'.join(path.split('.')[-2:])
+    return splitext(path)

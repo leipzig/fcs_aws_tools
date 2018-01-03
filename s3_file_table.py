@@ -7,9 +7,9 @@ import time
 import click
 import os
 import sys
-from tools import get_full_record, get_s3_metadata
+import uuid
 import pandas
-
+from tools import get_full_record, get_s3_metadata, splitext_
 
 s3 = boto3.resource('s3')
 #bucket = s3.Bucket('cytovas-instrument-files')
@@ -69,5 +69,19 @@ def download(file,rename,bucket):
             else:
                 os.system("mv /tmp/{0} ./{0}".format(key.key))
 
+@cli.command()
+@click.option('--file', default = None, help='the file to be uploaded')
+@click.option('--bucket', default='cytovas-instrument-files')
+@click.option('--rename', is_flag=True, default = True, help='rename uploads to a UUID instead of their original files name')
+def upload(file,rename,bucket):
+    extension = splitext_(file)[1]
+    key = "{0}{1}".format(uuid.uuid4(),extension)
+    if rename == True:
+        s3.Bucket(bucket).upload_file(file, os.path.basename(file))
+        print(key)
+    else:
+        s3.Bucket(bucket).upload_file(file, key)
+
 if __name__ == '__main__':
     cli()
+
