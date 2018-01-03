@@ -40,9 +40,12 @@ def list(file,full,bucket,s3_metadata,format):
     if format=='json':
         if full or s3_metadata == True:
             print(json.dumps(records))
+    elif format=='csv':
+        pjson=pandas.read_json(json.dumps(records))
+        print(pjson.T.to_csv(sep=','))
     elif format=='tsv':
         pjson=pandas.read_json(json.dumps(records))
-        print(pjson.T.to_csv())
+        print(pjson.T.to_csv(sep='\t'))
 
 @cli.command()
 @click.option('--file', default = None, help='a specific file')
