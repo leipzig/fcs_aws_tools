@@ -1,5 +1,6 @@
-import subprocess
+#!/usr/bin/env python3
 
+import subprocess
 import boto3
 import json
 import requests
@@ -9,7 +10,7 @@ import os
 import sys
 import uuid
 import pandas
-from utils import get_full_record, get_s3_metadata, splitext_
+from .utils import get_full_record, get_s3_metadata, splitext_
 
 s3 = boto3.resource('s3')
 #bucket = s3.Bucket('cytovas-instrument-files')
