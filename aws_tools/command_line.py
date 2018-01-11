@@ -9,7 +9,7 @@ import os
 import sys
 import uuid
 import pandas
-from tools import get_full_record, get_s3_metadata, splitext_
+from utils import get_full_record, get_s3_metadata, splitext_
 
 s3 = boto3.resource('s3')
 #bucket = s3.Bucket('cytovas-instrument-files')
