@@ -63,8 +63,8 @@ def list(file,full,bucket,s3_metadata,format):
 def download(file,rename,bucket):
     bucket_obj = s3.Bucket(bucket)
     for key in bucket_obj.objects.all():
-        record = get_full_record(bucket, key.key)
         if file is None or (file and file == key.key):
+            record = get_full_record(bucket, key.key)
             if rename:
                 os.system("mv /tmp/{0} ./{1}".format(key.key,record['s3_metadata']['qqfilename']))
             else:
