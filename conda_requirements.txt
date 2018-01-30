@@ -1,6 +1,6 @@
 # This file may be used to create an environment using:
 # $ conda create --name <env> --file <this file>
-# platform: linux-64
+# platform: osx-64
 agate=1.6.0=py35_2
 agate-dbf=0.2.0=py35_0
 agate-excel=0.2.1=py35_0
@@ -27,13 +27,13 @@ jdcal=1.3=py35_0
 jmespath=0.9.3=py35_0
 leather=0.3.3=py35_0
 libffi=3.2.1=3
-libgfortran=3.0.0=1
+libgfortran=3.0.0=0
 ncurses=5.9=10
-numpy=1.13.3=py35_blas_openblas_201
+numpy=1.14.0=py35_blas_openblas_200
 openblas=0.2.20=6
 openpyxl=2.4.0=py35_0
 openssl=1.0.2m=0
-pandas=0.21.0=py35_0
+pandas=0.22.0=py35_0
 parsedatetime=2.4=py35_0
 pip=9.0.1=py35_0
 pycparser=2.18=py35_0
